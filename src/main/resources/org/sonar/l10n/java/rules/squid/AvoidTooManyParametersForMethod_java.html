@@ -1,0 +1,13 @@
+<p>Method should not have more then 5 parameters</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+ public void methodWithMyCompanyRule(int input1,int input2,int input3,int input4,int input5,int input6) {// Noncompliant {{Too many inputs parameters}}
+	  // ..
+  }
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+public void methodWithMyCompanyRule(int input1,int input2,int input3) { // Compliant
+	  //..
+  }
+</pre>

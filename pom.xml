@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>java-custom-plugin</groupId>
+	<!-- it's recommended to follow the pattern "sonar-{key}-plugin", 
+		" for example sonar-java-plugin" -->
+	<artifactId>java-custom-plugin</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- this is important for sonar-packaging-maven-plugin -->
+	<packaging>sonar-plugin</packaging>
+	
+	<name>SonarQube Java Custom Rules Example</name>
+	<properties>
+		<sonar.version>7.1</sonar.version>
+		<sonarjava.version>5.7.0.15470</sonarjava.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.sonarsource.sonarqube</groupId>
+			<artifactId>sonar-plugin-api</artifactId>
+			<!-- minimal version of SonarQube to support. Note that the groupId was 
+				"org.codehaus.sonar" before version 5.2 -->
+			<version>${sonar.version}</version>
+			<!-- mandatory scope -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.java</groupId>
+			<artifactId>sonar-java-plugin</artifactId>
+			<type>sonar-plugin</type>
+			<version>${sonarjava.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!--  Test Dependencies -->
+		<dependency>
+			<groupId>org.sonarsource.java</groupId>
+			<artifactId>java-checks-testkit</artifactId>
+			<version>${sonarjava.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.6.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+				<artifactId>sonar-packaging-maven-plugin</artifactId>
+				<version>1.17</version>
+				<extensions>true</extensions>
+				<configuration>
+					<pluginKey>java-custom-rules</pluginKey>
+					<pluginName>Java Custom Rules</pluginName>
+					<pluginDescription>Custum Rules for My project</pluginDescription> 
+					<!-- the entry-point class that extends org.sonar.api.SonarPlugin -->
+					<pluginClass>com.company.custoumrules.plugin.MyJavaRulesPlugin</pluginClass>
+					<sonarLintSupported>true</sonarLintSupported>
+					<sonarQubeMinVersion>7.1</sonarQubeMinVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
